@@ -61,7 +61,7 @@ model = None
 if HAS_GOOGLE_AI and api_key:
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         print("✅ Google Gemini API configured successfully")
     except Exception as e:
         print(f"Warning: Google API configuration failed: {e}")

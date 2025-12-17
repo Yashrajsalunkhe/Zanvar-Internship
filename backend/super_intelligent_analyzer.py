@@ -179,7 +179,7 @@ class SuperIntelligentAnalyzer:
             api_key = os.getenv('GOOGLE_API_KEY')
             if api_key:
                 genai.configure(api_key=api_key)
-                self.google_model = genai.GenerativeModel('gemini-1.5-flash')
+                self.google_model = genai.GenerativeModel('gemini-2.5-flash')
                 logger.info("✅ Google Gemini API initialized")
             else:
                 self.google_model = None
@@ -859,9 +859,21 @@ class SuperIntelligentAnalyzer:
                 margin=dict(l=50, r=200, t=100, b=50)
             )
             
-            # Convert to base64
+            # Convert to base64 and save file
             img_bytes = fig.to_image(format="png", width=1200, height=700)
             img_base64 = base64.b64encode(img_bytes).decode()
+            
+            # Also save to generated_charts directory for fallback
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            chart_filename = f"pie_chart_{timestamp}.png"
+            chart_path = os.path.join("generated_charts", chart_filename)
+            
+            # Ensure directory exists
+            os.makedirs("generated_charts", exist_ok=True)
+            
+            # Save the chart
+            with open(chart_path, "wb") as f:
+                f.write(img_bytes)
             
             # Generate comprehensive analysis
             total_rejections = sum(defect_counts)
@@ -901,8 +913,12 @@ class SuperIntelligentAnalyzer:
             response += f"• **Process Stability**: {'Unstable' if top_defect_percentage > 50 else 'Needs attention' if top_defect_percentage > 30 else 'Acceptable'}\n"
             response += f"• **Improvement Potential**: Fixing top defect could reduce rejections by {top_defect_percentage:.0f}%\n\n"
             
-            response += f"📊 **Interactive Visualization:**\n"
-            response += f"![Chart](data:image/png;base64,{img_base64})"
+            response += f"📊 **Interactive Visualization:**\n\n"
+            
+            # Provide multiple format options for better compatibility
+            response += f'<img src="data:image/png;base64,{img_base64}" alt="Pie Chart Analysis" style="max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />\n\n'
+            response += f"![Pie Chart](data:image/png;base64,{img_base64})\n\n"
+            response += f"*Chart saved as: {chart_filename}*"
             
             return response
             

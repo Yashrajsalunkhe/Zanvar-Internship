@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { sendChatMessage } from '../api';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 const AI_AVATAR = "https://lh3.googleusercontent.com/aida-public/AB6AXuB0wTJWIrhQLopY-NST5feHfVDAW3zt9fBCsOqMH7dKm-alsHLUuB-obdVAvz9OW9yvwXShnjqyZPb3peYkyp_0qmg-JRqwrsXXlIF5QsSKJlMOL5Fwvlq-uEZqhXC1WuviG7Cm9F1vDsxt6qlUw8djKsMXcvB6-dERLimymkLwinEZVAi8UyU6VUxAWxkkeODlqWnUihH0ssmhexrOAhW6FKxh1Ywgc3l4luHOALFzb0_UBMalrmXPiJsrnZUXOGuZEBbt3TBqXgY";
 const USER_AVATAR = "https://lh3.googleusercontent.com/aida-public/AB6AXuCowg1gvXl3EKMwpawwVdqdaWLKixCbSbj3seHqsvId_ih8u-jW9o68SBfvHmr_GgkeWydQ4NMVasHaV6a_vmnEGFgC6UeBQs01IfTSXtrQkuAjUDYu2aR7AU01mCFwoUd4sJx0FgMX4bTLLXnfN30fJGKtY-qnwaowq5MAnUMC42DHZ1jpZkSzUGDjRX_NVQte3tUtxPscdaZopJZly8xlDcVtPCXjxg09Jo97XKwNvjcGvp0VaL4ZrRzxRja7mxJm7j5gcKkxURA";
@@ -155,11 +156,25 @@ const Chat = () => {
                     {msg.sender === "ai" ? (
                       <div className="text-base font-normal leading-normal rounded-xl px-4 py-3 bg-[#2b3640] text-white text-left break-words whitespace-pre-line inline-block max-w-full" style={{ minWidth: '60px', maxWidth: '90vw', wordBreak: 'break-word' }}>
                         <ReactMarkdown
+                          rehypePlugins={[rehypeRaw]}
                           components={{
                             ul: ({node, ...props}) => <ul style={{ paddingLeft: 20, margin: 0 }} {...props} />,
                             ol: ({node, ...props}) => <ol style={{ paddingLeft: 20, margin: 0 }} {...props} />,
                             li: ({node, ...props}) => <li style={{ marginBottom: 4 }} {...props} />,
                             p: ({node, ...props}) => <p style={{ margin: 0 }} {...props} />,
+                            img: ({node, ...props}) => (
+                              <img 
+                                {...props} 
+                                style={{ 
+                                  maxWidth: '100%', 
+                                  height: 'auto', 
+                                  borderRadius: '8px', 
+                                  margin: '10px 0',
+                                  display: 'block'
+                                }} 
+                                alt={props.alt || "Chart"}
+                              />
+                            ),
                           }}
                         >{msg.text}</ReactMarkdown>
                       </div>
