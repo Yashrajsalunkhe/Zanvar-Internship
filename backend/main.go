@@ -134,11 +134,24 @@ func init() {
 func main() {
 	router := gin.Default()
 
-	// CORS configuration
+	// CORS configuration - reads from environment variable
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5173", "http://localhost:3000"}
+	
+	// Get allowed origins from environment variable, fallback to localhost for development
+	allowedOrigins := os.Getenv("ALLOWED_ORIGINS")
+	if allowedOrigins != "" {
+		// Split multiple origins by comma if provided
+		config.AllowOrigins = strings.Split(allowedOrigins, ",")
+		log.Printf("CORS: Allowing origins: %v", config.AllowOrigins)
+	} else {
+		// Default to localhost for development
+		config.AllowOrigins = []string{"http://localhost:5173", "http://localhost:3000"}
+		log.Println("CORS: Using default localhost origins")
+	}
+	
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
+	config.AllowCredentials = true
 	router.Use(cors.New(config))
 
 	// Routes
