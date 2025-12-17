@@ -49,15 +49,19 @@ const Chat = () => {
     setLoading(true);
     try {
       const res = await sendChatMessage(input);
-      setMessages((prev) => [
-        ...prev,
-        {
-          sender: "ai",
-          name: "AI Assistant",
-          avatar: AI_AVATAR,
-          text: res.response || res.reply || "(No response from backend)",
-        },
-      ]);
+      const aiMessage = {
+        sender: "ai",
+        name: "AI Assistant",
+        avatar: AI_AVATAR,
+        text: res.response || res.reply || "(No response from backend)",
+      };
+      
+      // Include chart data if present
+      if (res.chart_data) {
+        aiMessage.chartData = res.chart_data;
+      }
+      
+      setMessages((prev) => [...prev, aiMessage]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
@@ -114,10 +118,11 @@ const Chat = () => {
           </div>
           <div className="flex flex-1 justify-end gap-8">
             <div className="flex items-center gap-9">
-              {/* ...existing nav links... */}
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/">Home</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/upload">Upload</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/chat">Chat</a>
             </div>
             <div className="flex gap-2 items-center">
-              {/* ...existing buttons... */}
               <div
                 className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer border-2 border-[#dce8f3] hover:border-[#4fd1c5] transition-colors"
                 style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYdyNgyyZJ4noBYbSowbQlmHmOoT39UUwlEC_T057UfEahdu0OnGFRFCxmREtADsrlfZR9KE8G8w0As4FIHwcpS0lJf4WTu3Z8h-g4OzroeQn7u_R18GyuHYiqffgV_Ego8eJ3ON9Z2cBdt1YRrHSWUWkh2_hFmrUczIs6zmWo5sKsTOXmroNtBKycJ3CTJ5_s8KzaCsq7iH00lmHZGqhl9HGn6fEQFRYjBUwGdGifsFqPzptMAhVi4O5TPHtzdIhvYg7XI9esHsA')` }}
@@ -154,30 +159,83 @@ const Chat = () => {
                   <div className={`flex flex-1 flex-col gap-1 ${msg.sender === "user" ? "items-end" : "items-start"}`}>
                     <p className={`text-[#9daebe] text-[13px] font-normal leading-normal max-w-[360px] ${msg.sender === "user" ? "text-right" : ""}`}>{msg.name}</p>
                     {msg.sender === "ai" ? (
-                      <div className="text-base font-normal leading-normal rounded-xl px-4 py-3 bg-[#2b3640] text-white text-left break-words whitespace-pre-line inline-block max-w-full" style={{ minWidth: '60px', maxWidth: '90vw', wordBreak: 'break-word' }}>
-                        <ReactMarkdown
-                          rehypePlugins={[rehypeRaw]}
-                          components={{
-                            ul: ({node, ...props}) => <ul style={{ paddingLeft: 20, margin: 0 }} {...props} />,
-                            ol: ({node, ...props}) => <ol style={{ paddingLeft: 20, margin: 0 }} {...props} />,
-                            li: ({node, ...props}) => <li style={{ marginBottom: 4 }} {...props} />,
-                            p: ({node, ...props}) => <p style={{ margin: 0 }} {...props} />,
-                            img: ({node, ...props}) => (
-                              <img 
-                                {...props} 
-                                style={{ 
-                                  maxWidth: '100%', 
-                                  height: 'auto', 
-                                  borderRadius: '8px', 
-                                  margin: '10px 0',
-                                  display: 'block'
-                                }} 
-                                alt={props.alt || "Chart"}
-                              />
-                            ),
-                          }}
-                        >{msg.text}</ReactMarkdown>
-                      </div>
+                      <>
+                        <div className="text-base font-normal leading-normal rounded-xl px-4 py-3 bg-[#2b3640] text-white text-left break-words whitespace-pre-line inline-block max-w-full" style={{ minWidth: '60px', maxWidth: '90vw', wordBreak: 'break-word' }}>
+                          <ReactMarkdown
+                            rehypePlugins={[rehypeRaw]}
+                            components={{
+                              ul: ({node, ...props}) => <ul style={{ paddingLeft: 20, margin: 0 }} {...props} />,
+                              ol: ({node, ...props}) => <ol style={{ paddingLeft: 20, margin: 0 }} {...props} />,
+                              li: ({node, ...props}) => <li style={{ marginBottom: 4 }} {...props} />,
+                              p: ({node, ...props}) => <p style={{ margin: 0 }} {...props} />,
+                              img: ({node, ...props}) => (
+                                <img 
+                                  {...props} 
+                                  style={{ 
+                                    maxWidth: '100%', 
+                                    height: 'auto', 
+                                    borderRadius: '8px', 
+                                    margin: '10px 0',
+                                    display: 'block'
+                                  }} 
+                                  alt={props.alt || "Chart"}
+                                />
+                              ),
+                            }}
+                          >{msg.text}</ReactMarkdown>
+                        </div>
+                        {msg.chartData && (
+                          <div className="mt-2 bg-[#232b33] rounded-xl p-4 max-w-full" style={{ maxWidth: '90vw' }}>
+                            <h4 className="text-white font-semibold mb-3">{msg.chartData.title || 'Chart'}</h4>
+                            <div className="bg-[#1a2128] rounded-lg p-4">
+                              {msg.chartData.type === 'bar' && (
+                                <div className="space-y-2">
+                                  {msg.chartData.labels && msg.chartData.labels.map((label, i) => {
+                                    const value = msg.chartData.datasets?.[0]?.data?.[i] || 0;
+                                    const maxVal = Math.max(...(msg.chartData.datasets?.[0]?.data?.map(v => parseFloat(v) || 0) || [1]));
+                                    const percentage = (parseFloat(value) / maxVal) * 100;
+                                    return (
+                                      <div key={i} className="flex items-center gap-2">
+                                        <span className="text-[#9daebe] text-sm w-24 truncate">{label}</span>
+                                        <div className="flex-1 bg-[#2b3640] rounded-full h-6 overflow-hidden">
+                                          <div 
+                                            className="bg-[#4fd1c5] h-full flex items-center justify-end pr-2 transition-all duration-500"
+                                            style={{ width: `${percentage}%` }}
+                                          >
+                                            <span className="text-white text-xs font-semibold">{value}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                              {msg.chartData.type === 'pie' && (
+                                <div className="text-center text-[#9daebe]">
+                                  <p>Pie chart visualization</p>
+                                  {msg.chartData.labels && msg.chartData.labels.map((label, i) => (
+                                    <div key={i} className="flex justify-between py-1 border-b border-[#2b3640]">
+                                      <span>{label}</span>
+                                      <span className="text-white">{msg.chartData.datasets?.[0]?.data?.[i]}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                              {msg.chartData.type === 'line' && (
+                                <div className="text-center text-[#9daebe]">
+                                  <p>Line chart visualization</p>
+                                  {msg.chartData.labels && msg.chartData.labels.map((label, i) => (
+                                    <div key={i} className="flex justify-between py-1 border-b border-[#2b3640]">
+                                      <span>{label}</span>
+                                      <span className="text-white">{msg.chartData.datasets?.[0]?.data?.[i]}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </>
                     ) : (
                       <p className="text-base font-normal leading-normal rounded-xl px-4 py-3 bg-[#dce8f3] text-[#141a1f] inline-block max-w-full" style={{ minWidth: '60px', maxWidth: '90vw', wordBreak: 'break-word' }}>{msg.text}</p>
                     )}
@@ -207,7 +265,7 @@ const Chat = () => {
                     onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) handleSend(e); }}
                     disabled={loading}
                   />
-                  <div className="flex border-none bg-[#2b3640] items-center justify-center pr-4 rounded-r-xl border-l-0 !pr-2">
+                  <div className="flex border-none bg-[#2b3640] items-center justify-center rounded-r-xl border-l-0 pr-2">
                     <div className="flex items-center gap-4 justify-end">
                       <div className="flex items-center gap-1">
                         <button

@@ -3,7 +3,7 @@
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
-// File upload example
+// File upload
 export async function uploadFile(file) {
   const formData = new FormData();
   formData.append('file', file);
@@ -15,14 +15,17 @@ export async function uploadFile(file) {
   return res.json();
 }
 
-// Chat endpoint (updated to match backend)
+// Chat endpoint (compatible with both Python and Go backends)
 export async function sendChatMessage(message) {
   const res = await fetch(`${API_BASE}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message }),
   });
-  if (!res.ok) throw new Error('Chat failed');
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({ error: 'Chat request failed' }));
+    throw new Error(errorData.error || 'Chat failed');
+  }
   return res.json();
 }
 
@@ -37,4 +40,20 @@ export async function updateProfile(profileData) {
   return res.json();
 }
 
-// Add more API functions as needed
+// Generate chart
+export async function generateChart(chartData) {
+  const res = await fetch(`${API_BASE}/api/generate-chart`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(chartData),
+  });
+  if (!res.ok) throw new Error('Chart generation failed');
+  return res.json();
+}
+
+// Health check
+export async function healthCheck() {
+  const res = await fetch(`${API_BASE}/`);
+  if (!res.ok) throw new Error('Health check failed');
+  return res.json();
+}

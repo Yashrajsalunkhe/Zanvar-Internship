@@ -28,12 +28,19 @@ const Profile = () => {
             <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Zanvar</h2>
           </div>
           <div className="flex flex-1 justify-end gap-8">
+            <div className="flex items-center gap-9">
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/">Home</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/upload">Upload</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/chat">Chat</a>
+            </div>
+            <div className="flex gap-2 items-center">
             <div
               className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer border-2 border-[#dce8f3] hover:border-[#4fd1c5] transition-colors"
               style={{ backgroundImage: `url('${PROFILE_AVATAR}')` }}
               onClick={() => window.location.href = '/profile'}
               title="Go to Profile"
             ></div>
+            </div>
           </div>
         </header>
         <div className="px-40 flex flex-1 justify-center py-5">
@@ -103,7 +110,7 @@ const Profile = () => {
             </div>
             <div className="flex px-4 py-3 justify-end">
               <button
-                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#141a1f] text-sm font-bold leading-normal tracking-[0.015em]"
+                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#141a1f] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#4fd1c5] transition-colors"
                 type="submit"
               >
                 <span className="truncate">Update Settings</span>

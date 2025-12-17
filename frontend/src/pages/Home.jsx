@@ -19,17 +19,16 @@ const Home = () => {
           </div>
           <div className="flex flex-1 justify-end gap-8">
             <div className="flex items-center gap-9">
-              <a className="text-white text-sm font-medium leading-normal" href="#">Product</a>
-              <a className="text-white text-sm font-medium leading-normal" href="#">Solutions</a>
-              <a className="text-white text-sm font-medium leading-normal" href="#">Pricing</a>
-              <a className="text-white text-sm font-medium leading-normal" href="#">Resources</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/">Home</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/upload">Upload</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/chat">Chat</a>
             </div>
             <div className="flex gap-2 items-center">
-              <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#141a1f] text-sm font-bold leading-normal tracking-[0.015em]">
+              <button 
+                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#141a1f] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#4fd1c5] transition-colors"
+                onClick={() => window.location.href = '/upload'}
+              >
                 <span className="truncate">Get started</span>
-              </button>
-              <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#2b3640] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                <span className="truncate">Log in</span>
               </button>
               <div
                 className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer border-2 border-[#dce8f3] hover:border-[#4fd1c5] transition-colors"
@@ -53,7 +52,7 @@ const Home = () => {
                     <h1 className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">Unlock the Power of Your Data with AI</h1>
                     <h2 className="text-white text-sm font-normal leading-normal">Transform your spreadsheets into actionable insights with our AI-powered chatbot. Analyze, visualize, and understand your data like never before.</h2>
                   </div>
-                  <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#141a1f] text-sm font-bold leading-normal tracking-[0.015em] mt-4"
+                  <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#141a1f] text-sm font-bold leading-normal tracking-[0.015em] mt-4 hover:bg-[#4fd1c5] transition-colors"
                   onClick={() => window.location.href = '/upload'}
                   >
                     <span className="truncate">Upload Your File</span>
@@ -116,13 +115,12 @@ const Home = () => {
           <div className="flex max-w-[960px] flex-1 flex-col">
             <footer className="flex flex-col gap-6 px-5 py-10 text-center">
               <div className="flex flex-wrap items-center justify-center gap-6">
-                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40" href="#">Product</a>
-                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40" href="#">Solutions</a>
-                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40" href="#">Pricing</a>
-                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40" href="#">Resources</a>
-                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40" href="#">Contact Us</a>
+                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40 hover:text-[#4fd1c5] cursor-pointer transition-colors" href="/">Home</a>
+                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40 hover:text-[#4fd1c5] cursor-pointer transition-colors" href="/upload">Upload</a>
+                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40 hover:text-[#4fd1c5] cursor-pointer transition-colors" href="/chat">Chat</a>
+                <a className="text-[#9daebe] text-base font-normal leading-normal min-w-40 hover:text-[#4fd1c5] cursor-pointer transition-colors" href="/profile">Profile</a>
               </div>
-              <p className="text-[#9daebe] text-base font-normal leading-normal">© 2024 Zanvar Data Insights. All rights reserved.</p>
+              <p className="text-[#9daebe] text-base font-normal leading-normal">© 2025 Zanvar Data Insights. All rights reserved.</p>
             </footer>
           </div>
         </footer>

@@ -22,11 +22,11 @@ const Upload = () => {
           setStatus(`Upload failed: ${res.error}`);
         } else {
           setUploadProgress(100);
-          setStatus("Processing...");
+          setStatus("Processing complete!");
           // Save uploaded file info to localStorage for Chat page
           localStorage.setItem('uploadedFile', JSON.stringify({
-            filename: res.filename,
-            format: res.filename.split('.').pop().toUpperCase()
+            filename: res.filename || res.file_info?.Filename || file.name,
+            format: (res.filename || file.name).split('.').pop().toUpperCase()
           }));
           setTimeout(() => {
             window.location.href = '/chat';
@@ -57,15 +57,11 @@ const Upload = () => {
           </div>
           <div className="flex flex-1 justify-end gap-8">
             <div className="flex items-center gap-9">
-              <a className="text-white text-sm font-medium leading-normal" href="#">Home</a>
-              <a className="text-white text-sm font-medium leading-normal" href="#">Features</a>
-              <a className="text-white text-sm font-medium leading-normal" href="#">Pricing</a>
-              <a className="text-white text-sm font-medium leading-normal" href="#">Support</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/">Home</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/upload">Upload</a>
+              <a className="text-white text-sm font-medium leading-normal cursor-pointer hover:text-[#4fd1c5] transition-colors" href="/chat">Chat</a>
             </div>
             <div className="flex gap-2 items-center">
-              <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#141a1f] text-sm font-bold leading-normal tracking-[0.015em]">
-                <span className="truncate">Get Started</span>
-              </button>
               <div
                 className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer border-2 border-[#dce8f3] hover:border-[#4fd1c5] transition-colors"
                 style={{ backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYdyNgyyZJ4noBYbSowbQlmHmOoT39UUwlEC_T057UfEahdu0OnGFRFCxmREtADsrlfZR9KE8G8w0As4FIHwcpS0lJf4WTu3Z8h-g4OzroeQn7u_R18GyuHYiqffgV_Ego8eJ3ON9Z2cBdt1YRrHSWUWkh2_hFmrUczIs6zmWo5sKsTOXmroNtBKycJ3CTJ5_s8KzaCsq7iH00lmHZGqhl9HGn6fEQFRYjBUwGdGifsFqPzptMAhVi4O5TPHtzdIhvYg7XI9esHsA')` }}
