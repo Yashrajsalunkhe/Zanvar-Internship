@@ -6,7 +6,6 @@ services:
     region: oregon
     plan: free
     rootDir: backend
-    goVersion: "1.23"
     buildCommand: go build -o server main.go analyzer.go
     startCommand: ./server
     envVars:
@@ -20,15 +19,17 @@ services:
         sync: false  # Set this after getting your frontend URL
     healthCheckPath: /
 
-  # Frontend Service (Static Site)
+  # Frontend Service (Node.js serving static files)
   - type: web
     name: zanvar-frontend
-    env: static
+    env: node
     region: oregon
     plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    startCommand: npx serve -s dist -l 3000
     envVars:
+      - key: NODE_VERSION
+        value: 18
       - key: VITE_API_BASE
         sync: false  # Set this to your backend URL after backend deployment
