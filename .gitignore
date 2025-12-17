@@ -68,7 +68,7 @@ backend/server
 backend/zanvar-server
 
 # Go build cache
-go.sum
+# go.sum - COMMENTED OUT: Needed for Render deployment
 
 # Vendor directory
 vendor/
