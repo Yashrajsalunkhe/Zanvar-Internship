@@ -44,6 +44,11 @@ ENV/
 env.bak/
 venv.bak/
 pyvenv.cfg
+.venv/
+
+# UV
+uv.lock
+.python-version
 
 # Environment variables and secrets
 .env
