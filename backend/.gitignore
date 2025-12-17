@@ -1,0 +1,43 @@
+# Ignore build outputs
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Ignore test binaries
+*.test
+
+# Ignore output of go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# Environment variables
+.env
+
+# Uploaded files
+uploads/*
+!uploads/.gitkeep
+
+# Generated charts
+generated_charts/*
+!generated_charts/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

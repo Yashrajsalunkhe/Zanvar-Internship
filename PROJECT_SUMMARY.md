@@ -15,7 +15,7 @@ Zanvar-Internship/
 │   ├── .env.production   # Production environment variables
 │   └── package.json
 │
-├── backend-go/           # Go backend with Gin framework
+├── backend/           # Go backend with Gin framework
 │   ├── main.go          # Server and API routes
 │   ├── analyzer.go      # Data analysis logic
 │   ├── .env             # Development environment variables
@@ -70,7 +70,7 @@ Zanvar-Internship/
 
 #### Start Backend
 ```bash
-cd backend-go
+cd backend
 cp .env.example .env
 # Add your GEMINI_API_KEY to .env
 go run main.go analyzer.go
@@ -91,7 +91,7 @@ Frontend runs on: http://localhost:5173
 ```
 
 This builds:
-- Backend binary: `backend-go/server`
+- Backend binary: `backend/server`
 - Frontend static files: `frontend/dist/`
 
 ## 📋 API Endpoints
@@ -144,7 +144,7 @@ GIN_MODE=debug
 
 ### Production Configuration
 - See `.env.production` files
-- Update CORS origins in `backend-go/main.go`
+- Update CORS origins in `backend/main.go`
 - Set `GIN_MODE=release` for production
 
 ## 📦 Deployment
@@ -157,7 +157,7 @@ docker-compose up -d
 ### Manual Deployment
 1. Build both frontend and backend: `./build.sh`
 2. Configure production environment variables
-3. Deploy backend: `cd backend-go && GIN_MODE=release ./server`
+3. Deploy backend: `cd backend && GIN_MODE=release ./server`
 4. Serve frontend static files with nginx/Apache
 5. Configure SSL with Let's Encrypt
 

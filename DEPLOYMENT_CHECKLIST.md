@@ -83,7 +83,7 @@
 
 ### Deployment Steps
 1. Build frontend: `cd frontend && npm run build`
-2. Build backend: `cd backend-go && go build -o server`
+2. Build backend: `cd backend && go build -o server`
 3. Configure nginx/Apache to serve frontend static files
 4. Run backend server with production environment variables
 5. Update CORS settings to match production domain

@@ -11,7 +11,7 @@
 
 ### Build the Go Backend
 ```bash
-cd backend-go
+cd backend
 go build -o server main.go analyzer.go
 ```
 
@@ -151,10 +151,10 @@ After=network.target
 [Service]
 Type=simple
 User=www-data
-WorkingDirectory=/path/to/backend-go
+WorkingDirectory=/path/to/backend
 Environment="GIN_MODE=release"
-EnvironmentFile=/path/to/backend-go/.env.production
-ExecStart=/path/to/backend-go/server
+EnvironmentFile=/path/to/backend/.env.production
+ExecStart=/path/to/backend/server
 Restart=on-failure
 
 [Install]
@@ -172,7 +172,7 @@ sudo systemctl status zanvar-backend
 ### Alternative: Docker Deployment
 
 #### Backend Dockerfile
-Create `backend-go/Dockerfile`:
+Create `backend/Dockerfile`:
 ```dockerfile
 FROM golang:1.20-alpine AS builder
 WORKDIR /app
@@ -214,13 +214,13 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend-go
+    build: ./backend
     ports:
       - "5000:5000"
     environment:
       - GIN_MODE=release
     env_file:
-      - ./backend-go/.env.production
+      - ./backend/.env.production
     restart: unless-stopped
 
   frontend:
@@ -314,7 +314,7 @@ docker-compose logs -f frontend
 ### Updates
 ```bash
 # Backend
-cd backend-go
+cd backend
 go get -u ./...
 go mod tidy
 go build -o server

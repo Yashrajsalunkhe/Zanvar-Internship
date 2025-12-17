@@ -4,8 +4,8 @@
 
 echo "🚀 Starting Zanvar Go Backend..."
 
-# Navigate to backend-go directory
-cd "$(dirname "$0")/backend-go" || exit 1
+# Navigate to backend directory
+cd "$(dirname "$0")/backend" || exit 1
 
 # Check if .env exists
 if [ ! -f .env ]; then

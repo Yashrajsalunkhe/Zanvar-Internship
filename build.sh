@@ -9,13 +9,13 @@ echo "🚀 Starting build process..."
 
 # Build Backend
 echo ""
-echo "📦 Building Go Backend..."
-cd backend-go
+echo "🔨 Building Go backend..."
+cd backend
 echo "   - Downloading dependencies..."
 go mod download
 echo "   - Compiling binary..."
 go build -o server main.go analyzer.go
-echo "   ✅ Backend build complete: backend-go/server"
+echo "   ✅ Backend build complete: backend/server"
 
 # Build Frontend
 echo ""
@@ -32,11 +32,11 @@ echo "🎉 Build complete! Ready for deployment."
 echo ""
 echo "Next steps:"
 echo "1. Configure production environment variables:"
-echo "   - backend-go/.env.production (copy from .env.production.example)"
+echo "   - backend/.env.production (copy from .env.production.example)"
 echo "   - frontend/.env.production (update API URL)"
 echo ""
 echo "2. Deploy backend:"
-echo "   cd backend-go && GIN_MODE=release ./server"
+echo "   cd backend && GIN_MODE=release ./server"
 echo ""
 echo "3. Deploy frontend:"
 echo "   - Serve frontend/dist/ with nginx/Apache"

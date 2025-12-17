@@ -13,8 +13,8 @@ fi
 
 echo "✅ Go version: $(go version)"
 
-# Navigate to backend-go directory
-cd "$(dirname "$0")/backend-go" || exit 1
+# Navigate to backend directory
+cd "$(dirname "$0")/backend" || exit 1
 
 # Copy .env.example to .env if it doesn't exist
 if [ ! -f .env ]; then
@@ -39,6 +39,6 @@ echo ""
 echo "✅ Setup complete!"
 echo ""
 echo "📝 Next steps:"
-echo "  1. Update backend-go/.env with your GOOGLE_API_KEY"
+echo "  1. Update backend/.env with your GOOGLE_API_KEY"
 echo "  2. Run: ./run-go.sh"
 echo ""

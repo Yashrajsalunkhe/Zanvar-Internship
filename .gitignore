@@ -50,6 +50,37 @@ pyvenv.cfg
 uv.lock
 .python-version
 
+# =====================================
+# Go Backend Files
+# =====================================
+
+# Go binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+server
+zanvar-server
+backend/server
+backend/zanvar-server
+
+# Go build cache
+go.sum
+
+# Vendor directory
+vendor/
+
+# Go coverage files
+coverage.txt
+*.prof
+
+# =====================================
+# Environment & Secrets
+# =====================================
+
 # Environment variables and secrets
 .env
 .env.local
@@ -60,29 +91,11 @@ uv.lock
 .flaskenv
 config.py
 secrets.json
-
-# Testing
-.tox/
-.nox/
-.coverage
-.pytest_cache/
-cover/
-htmlcov/
-.coverage.*
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# PyCharm
-.idea/
+api_keys.json
+api_config.py
+credentials.json
+service-account-key.json
+google-credentials.json
 
 # =====================================
 # Node.js Frontend Files
@@ -94,6 +107,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+pnpm-debug.log*
 
 # Runtime data
 pids
@@ -101,11 +115,9 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
+# Coverage directory
 coverage/
 *.lcov
-
-# nyc test coverage
 .nyc_output
 
 # Build outputs
@@ -113,25 +125,20 @@ build/
 dist/
 out/
 
-# Next.js build output
+# Next.js
 .next
 
-# Nuxt.js build / generate output
+# Nuxt.js
 .nuxt
 
-# React build
+# React/Vite build
 frontend/build/
+frontend/dist/
 
-# Optional npm cache directory
+# Cache
 .npm
-
-# Optional eslint cache
 .eslintcache
-
-# Yarn Integrity file
 .yarn-integrity
-
-# parcel-bundler cache
 .cache
 .parcel-cache
 
@@ -139,16 +146,13 @@ frontend/build/
 # Data and Upload Files
 # =====================================
 
-# Uploaded data files (keep sample data)
-backend/uploads/
+# Uploaded data files
+backend/uploads/*
 !backend/uploads/.gitkeep
 
 # Generated charts and visualizations
-backend/generated_charts/
+backend/generated_charts/*
 !backend/generated_charts/.gitkeep
-
-# Sample data (uncomment if you want to ignore)
-# sample_data/
 
 # Large data files
 *.csv
@@ -159,6 +163,9 @@ backend/generated_charts/
 !package-lock.json
 !frontend/package.json
 !frontend/package-lock.json
+!backend/go.mod
+!**/tsconfig.json
+!**/vite.config.js
 
 # Database files
 *.db
@@ -224,11 +231,12 @@ Icon
 # =====================================
 
 # Visual Studio Code
-.vscode/
+.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
 
 # JetBrains IDEs
 .idea/
@@ -257,6 +265,30 @@ tramp
 .\#*
 
 # =====================================
+# Testing
+# =====================================
+
+# Python testing
+.tox/
+.nox/
+.coverage
+.pytest_cache/
+cover/
+htmlcov/
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# =====================================
 # Temporary and Cache Files
 # =====================================
 
@@ -274,22 +306,6 @@ tramp
 
 # Sass cache
 .sass-cache/
-
-# ESLint cache
-.eslintcache
-
-# =====================================
-# AI and API Keys
-# =====================================
-
-# API configuration files
-api_keys.json
-api_config.py
-credentials.json
-
-# Google AI API files
-service-account-key.json
-google-credentials.json
 
 # =====================================
 # Deployment and Production
@@ -333,15 +349,8 @@ docs/_build/
 local_config.py
 local_settings.json
 
-# =====================================
 # Analytics and Monitoring
-# =====================================
-
-# Monitoring data
 monitoring/
 metrics/
-
-# Error tracking
 error_logs/
 crash_reports/
-
