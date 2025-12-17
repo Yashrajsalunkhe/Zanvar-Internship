@@ -6,6 +6,7 @@ services:
     region: oregon
     plan: free
     rootDir: backend
+    goVersion: "1.23"
     buildCommand: go build -o server main.go analyzer.go
     startCommand: ./server
     envVars:
