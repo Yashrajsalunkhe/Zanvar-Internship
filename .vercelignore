@@ -1,0 +1,12 @@
+backend/
+*.go
+go.mod
+go.sum
+*.sh
+node_modules/
+.git/
+.env
+.env.*
+!.env.production
+uploads/
+generated_charts/
